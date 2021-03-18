@@ -16,10 +16,10 @@ There are two possible ways to submit your project. Your instructor should have 
 
 #### Option B - Pull Request
 
-- [ ] Fork and clone the repository.
-- [ ] Implement your project in a `firstname-lastname` branch.
-- [ ] Create a pull request of `firstname-lastname` against your `main` branch.
-- [ ] Open the assignment in Canvas and submit your pull request.
+- [x] Fork and clone the repository.
+- [x] Implement your project in a `firstname-lastname` branch.
+- [x] Create a pull request of `firstname-lastname` against your `main` branch.
+- [x] Open the assignment in Canvas and submit your pull request.
 
 ### Task 2: Minimum Viable Product
 
@@ -44,19 +44,19 @@ Use a graphical tool like `SQLite Studio` to open `./data/northwind.db3` and exe
 
 Write middleware functions in `api/schemes/scheme-middleware.js` following the instructions inside that file:
 
-- [ ] `checkSchemeId`
-- [ ] `validateScheme`
-- [ ] `validateStep`
+- [x] `checkSchemeId`
+- [x] `validateScheme`
+- [x] `validateStep`
 
 ### Database Functions
 
 Write db access functions in `api/schemes/scheme-model.js` following the instructions inside that file:
 
-- [ ] `find`
-- [ ] `findById`
-- [ ] `findSteps`
-- [ ] `add`
-- [ ] `addStep`
+- [x] `find`
+- [x] `findById`
+- [x] `findSteps`
+- [x] `add`
+- [x] `addStep`
 
 #### Schemes Schema
 
@@ -101,8 +101,40 @@ You do not need to make any changes to this file.
 In [SQL Try Editor at W3Schools.com](https://www.w3schools.com/Sql/tryit.asp?filename=trysql_select_top):
 
 - Find the number of shipments by each shipper.
+            ------`
+    SELECT *, count(orderID) as NumberOfShipments
+    FROM shippers as s
+    JOIN orders as o
+        on s.shipperID = o.shipperID
+    GROUP BY s.shipperID
+            `------
+
 - Find the top 5 best performing employees measured in number of orders.
+            `------
+        SELECT  (LastName || ' ' || FirstName) as Employee,  count(orderID) as Orders
+        FROM employees as e
+        JOIN orders as o
+            ON e.employeeID = o.employeeID
+        GROUP BY e.employeeID
+        ORDER BY orders DESC
+        LIMIT 5
+            `------
+
 - Find the top 5 best performing employees measured in revenue.
+            `------
+    SELECT (FirstName || ' ' || LastName) as Name, Quantity, Price, ProductName, sum(Quantity*Price) as OrderPrice
+    FROM orders as o
+    JOIN OrderDetails as d
+        ON o.orderID = d.orderID
+    JOIN products as p
+        ON d.productID = p.productID
+    JOIN employees as e
+        ON o.employeeID = e.employeeID
+    GROUP BY Name
+    ORDER BY OrderPrice DESC
+    LIMIT 5
+            `------
+
 - Find the category that brings in the least revenue.
 - Find the customer country with the most orders.
 - Find the shipper that moves the most cheese measured in units.
